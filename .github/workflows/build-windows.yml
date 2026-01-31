@@ -28,7 +28,8 @@ jobs:
       - name: Setup vcpkg + install dependencies
         uses: lukka/run-vcpkg@v11
         with:
-          vcpkgGitCommitId: '44bb3ce006467fc13ba37ca099f64077b8bbf84d'
+          # Use upstream vcpkg; avoid pinning a specific commit to reduce git fetch issues.
+          vcpkgGitURL: 'https://github.com/microsoft/vcpkg.git'
           runVcpkgInstall: true
           vcpkgJsonGlob: 'vcpkg.json'
 
