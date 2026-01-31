@@ -10,6 +10,9 @@ jobs:
   build-windows:
     runs-on: windows-latest
 
+    env:
+      VCPKG_DISABLE_METRICS: 1
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,19 +28,17 @@ jobs:
           arch: 'win64_msvc2019_64'
           cache: true
 
-      - name: Install OpenCV (vcpkg)
-        shell: pwsh
-        env:
-          VCPKG_DISABLE_METRICS: 1
-        run: |
-          Remove-Item Env:VCPKG_ROOT -ErrorAction SilentlyContinue
-          git clone https://github.com/microsoft/vcpkg.git
-          .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
-          .\vcpkg\vcpkg.exe install opencv4:x64-windows --classic
+      - name: Install OpenCV via vcpkg
+        uses: microsoft/vcpkg-action@v1
+        with:
+          vcpkgGitCommitId: '44bb3ce006467fc13ba37ca099f64077b8bbf84d'
+          vcpkgArguments: 'opencv4:x64-windows'
+          vcpkgTriplet: 'x64-windows'
 
       - name: Configure (CMake)
         shell: pwsh
         run: |
+          Remove-Item Env:VCPKG_ROOT -ErrorAction SilentlyContinue
           cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
             -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake"
 
