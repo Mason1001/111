@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
   "name": "111",
   "version-string": "0.0.0",
-  "builtin-baseline": "44bb3ce006467fc13ba37ca099f64077b8bbf84d",
+  "builtin-baseline": "6d7bf7ef2193e2d1c5798a5ff8811d533104c861",
   "dependencies": [
     "opencv4"
   ]
