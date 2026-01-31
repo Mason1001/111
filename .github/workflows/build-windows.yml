@@ -10,9 +10,6 @@ jobs:
   build-windows:
     runs-on: windows-latest
 
-    env:
-      VCPKG_DISABLE_METRICS: 1
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,12 +25,13 @@ jobs:
           arch: 'win64_msvc2019_64'
           cache: true
 
-      - name: Install OpenCV via vcpkg
-        uses: microsoft/vcpkg-action@v1
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
         with:
           vcpkgGitCommitId: '44bb3ce006467fc13ba37ca099f64077b8bbf84d'
+          vcpkgJsonGlob: ''
+          runVcpkgInstall: true
           vcpkgArguments: 'opencv4:x64-windows'
-          vcpkgTriplet: 'x64-windows'
 
       - name: Configure (CMake)
         shell: pwsh
