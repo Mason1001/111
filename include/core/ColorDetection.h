@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QColor>
 #include <QPoint>
+#include <QRect>
 #include <opencv2/opencv.hpp>
 #include <vector>
 
