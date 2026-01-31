@@ -24,10 +24,12 @@ jobs:
 
       - name: Install OpenCV (vcpkg)
         shell: pwsh
+        env:
+          VCPKG_DISABLE_METRICS: 1
         run: |
           git clone https://github.com/microsoft/vcpkg.git
-          .\vcpkg\bootstrap-vcpkg.bat
-          .\vcpkg\vcpkg.exe install opencv4:x64-windows
+          .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
+          .\vcpkg\vcpkg.exe install opencv4:x64-windows --classic
 
       - name: Configure (CMake)
         shell: pwsh
