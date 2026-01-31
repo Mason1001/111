@@ -25,20 +25,27 @@ jobs:
           arch: 'win64_msvc2019_64'
           cache: true
 
-      - name: Setup vcpkg + install dependencies
-        uses: lukka/run-vcpkg@v11
-        with:
-          # Use upstream vcpkg; avoid pinning a specific commit to reduce git fetch issues.
-          vcpkgGitURL: 'https://github.com/microsoft/vcpkg.git'
-          runVcpkgInstall: true
-          vcpkgJsonGlob: 'vcpkg.json'
+      - name: Clone vcpkg
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/microsoft/vcpkg.git ${{ github.workspace }}\vcpkg
+
+      - name: Bootstrap vcpkg
+        shell: pwsh
+        run: |
+          & "${{ github.workspace }}\vcpkg\bootstrap-vcpkg.bat" -disableMetrics
+
+      - name: Install dependencies (vcpkg)
+        shell: pwsh
+        run: |
+          & "${{ github.workspace }}\vcpkg\vcpkg.exe" install opencv4 --triplet x64-windows
 
       - name: Configure (CMake)
         shell: pwsh
         run: |
-          Remove-Item Env:VCPKG_ROOT -ErrorAction SilentlyContinue
           cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
-            -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake"
+            -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake" `
+            -DVCPKG_TARGET_TRIPLET=x64-windows
 
       - name: Build (Release)
         run: cmake --build build --config Release
