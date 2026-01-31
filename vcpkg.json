@@ -1,22 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
-  "name": "accessibility-gaming-assistant",
-  "version": "1.0.0",
-  "description": "Accessibility Gaming Assistant - Helping gamers with disabilities",
-  "homepage": "https://github.com/yourusername/AccessibilityGamingAssistant",
-  "license": "MIT",
-  "supports": "windows & x64",
+  "name": "111",
+  "version-string": "0.0.0",
+  "builtin-baseline": "44bb3ce006467fc13ba37ca099f64077b8bbf84d",
   "dependencies": [
-    {
-      "name": "opencv4",
-      "default-features": false,
-      "features": [
-        "jpeg",
-        "png",
-        "tiff",
-        "webp"
-      ]
-    }
-  ],
-  "builtin-baseline": "2024.01.12"
+    "opencv4"
+  ]
 }
