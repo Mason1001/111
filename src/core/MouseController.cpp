@@ -2,6 +2,7 @@
 #include <QCursor>
 #include <QGuiApplication>
 #include <QScreen>
+#include <algorithm>
 #include <cmath>
 #include <chrono>
 
